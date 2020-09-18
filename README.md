@@ -34,3 +34,7 @@ Usage: cpulimit-daemon [-f] -e "myprocess.*-some -process -arguments" -p 100
 ```shell
 sudo ./cpulimit-daemon -e chrome -p 50
 ```
+
+# Why is my shell application stopped
+This is "expected behaviour", see here:  
+https://unix.stackexchange.com/questions/124126/why-cpulimit-makes-process-stopped
