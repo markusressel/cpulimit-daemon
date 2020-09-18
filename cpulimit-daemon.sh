@@ -51,7 +51,7 @@ function color_echo () {
 }
 
 function print_usage() {
-  echo "Usage: cpulimit-daemon [-f] -e "myprocess.*-some -process -arguments" -p 100"
+  echo "Usage: cpulimit-daemon [-f] -e \"myprocess.*-some -process -arguments\" -p 100"
 }
 
 # Read command line arguments
@@ -80,7 +80,7 @@ function run_limit_loop() {
   then
     color_echo "${Green}" "Limit for $pid STARTED..."
     # note: cpulimit blocks while the application is running
-    cpulimit -p "$pid" -l "$percentage" -z &> /dev/null
+    cpulimit -p "$pid" -l "$percentage" -z > /dev/null
     color_echo "${Red}" "Limit for $pid STOPPED"
   fi
 
@@ -147,9 +147,9 @@ do
   # Find process ids to limit
   pids=
   if [ -z "$f_flag" ]; then
-    pids=$(pgrep "$searchterm" | grep -vf "$WORKER_PROCESSES_PATH")
+    pids=$(pgrep    -a "$searchterm" | grep -vf "$WORKER_PROCESSES_PATH" | grep -vE ".*bash .*cpulimit-daemon.*" | awk '{print $1}')
   else
-    pids=$(pgrep -f "$searchterm" | grep -vf "$WORKER_PROCESSES_PATH")
+    pids=$(pgrep -f -a "$searchterm" | grep -vf "$WORKER_PROCESSES_PATH" | grep -vE ".*bash .*cpulimit-daemon.*" | awk '{print $1}')
   fi
 
   new_count=$(echo "$pids" | wc -w)
@@ -180,6 +180,6 @@ do
     fi
   done
 
-  # check for new processes every second
+  # sleep before checking for new processes
   sleep 0.2
 done
