@@ -96,7 +96,8 @@ function run_limit_loop() {
   # aquire file lock
   exec {lock_fd}>"$WORKER_LOCK" || exit 1
   flock "$lock_fd" || { echo "ERROR: flock() failed." >&2; exit 1; }
-    sed -i "/$pid/d" "$WORKER_PROCESSES_PATH"
+    this_pid="$$"
+    sed -i "/$this_pid/d" "$WORKER_PROCESSES_PATH"
   # release lock
   flock -u "$lock_fd"
 }
