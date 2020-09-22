@@ -135,7 +135,7 @@ function contains() {
 ## Main function
 
 # file to memorize our "worker" processes
-WORKER_LOCK=/var/lock/cpulimit_worker_lock
+WORKER_LOCK="/var/lock/cpulimit_worker_lock.$$"
 WORKER_PROCESSES_PATH="/dev/shm/worker_pids.$$"
 rm -f $WORKER_PROCESSES_PATH
 touch $WORKER_PROCESSES_PATH
@@ -144,7 +144,7 @@ touch $WORKER_PROCESSES_PATH
 echo -e "$$" >> "$WORKER_PROCESSES_PATH"
 
 # setup "database" file in shared memory to keep track of running cpulimit instances
-DB_LOCK=/var/lock/cpulimit_lock
+DB_LOCK="/var/lock/cpulimit_lock.$$"
 LIMITED_PIDS_PATH="/dev/shm/limited_pids.$$"
 rm -f $LIMITED_PIDS_PATH
 touch $LIMITED_PIDS_PATH
