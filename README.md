@@ -1,5 +1,7 @@
 # cpulimit-daemon
-A daemon to continuously limit the CPU utilization of one or more processes to a specific percentage.
+A daemon to continuously limit the CPU utilization of one or more processes to a specific percentage.  
+Unlike other tools, cpulimit-daemon can also limit processes that did not exist at the time of 
+launching cpulimit-daemon by constantly monitoring running processes and applying limits on the fly.
 
 # How to use
 
